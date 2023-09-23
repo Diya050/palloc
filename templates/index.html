@@ -50,7 +50,7 @@
                 <a class="nav-link" href="#">Dashboard</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/register.html">Register</a>
+                <a class="nav-link" href="/register">Register</a>
             </li>
         </ul>
     </div>
@@ -64,7 +64,10 @@
             <div class="col-md-6">
                 <div class="camera-box">
                     <h2>Entering</h2>
-                    <div id="entering-camera"><video id="camera-view" autoplay playsinline></video></div>
+                    <form action="#" method ="POST">
+                        <input type="text" id = 'vno_enter' placeholder="Enter Vehicle Number">
+                        <input type="submit">
+                    </form>
                     <div class="plate-number" id="entering-plate-number">License Plate: No data</div>
                 </div>
             </div>
@@ -73,7 +76,10 @@
             <div class="col-md-6">
                 <div class="camera-box">
                     <h2>Exiting</h2>
-                    <div id="exiting-camera"><video id="camera-view" autoplay playsinline></video></div>
+                    <form action="#" method ="POST">
+                        <input type="text" id = 'vno_exit' placeholder="Enter Vehicle Number">
+                        <input type="submit">
+                    </form>
                     <div class="plate-number" id="exiting-plate-number">License Plate: No data</div>
                 </div>
             </div>

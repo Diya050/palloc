@@ -1,66 +1,50 @@
 from flask import Flask, render_template, request, flash, session, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
-import cv2
-import numpy as np
 
 app = Flask(__name__)
-app.secret_key = "APEX"
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///Parking.db'  # SQLite database
-app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///parking.db'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.secret_key = 'secretkey'
 
 db = SQLAlchemy(app)
 
 class Parking(db.Model):
-    __tablename__ = 'parking'
-    plate = db.Column(db.String(100), primary_key=True)
-    name = db.Column(db.String(100))
-    gender = db.Column(db.String(100))
-    v_type = db.Column(db.Integer)
+    plate = db.Column(db.String(20), unique=True, nullable=False, primary_key=True)
+    name = db.Column(db.String(100), nullable=False)
+    gender = db.Column(db.String(2), nullable=False)
+    vehicle_type = db.Column(db.String(50), nullable=False)
 
-    def __init__(self, name, plate, gender, v_type):
-        self.name = name
-        self.plate = plate
-        self.gender = gender
-        self.v_type = v_type
+# Drop and recreate the table to include the 'name' column
+#with app.app_context():
+ #   db.drop_all()
+ #   db.create_all()
 
-@app.route('/')
+@app.route('/', methods=["GET", "POST"])
 def index():
     return render_template('index.html')
 
-@app.route('/register')
+@app.route("/register", methods=["GET", "POST"])
 def register():
-    
     if request.method == "POST":
         name = request.form.get("name")
         plate = request.form.get("plate")
-        gender = request.form.get("gender") 
-        v_type = request.form.get("vehicle")       
+        gender = request.form.get("gender")
+        vehicle_type = request.form.get("vehicle_type")
+       
+        plate_exists = db.session.query(Parking.query.filter_by(plate=plate).exists()).scalar()
 
-        found_plate = Parking.query.filter_by(plate=plate).first()
-        if found_plate:
-            flash("Already Registered")
-            #Display message already registered
+        if plate_exists:
+            flash('Plate number already exists!', 'danger')
         else:
-            plate_number = Parking(plate , "")
-            db.session.add(plate_number)
-            db.commit()
-            
-            flash("Registered")
+            new_entry = Parking(name=name, gender=gender, vehicle_type=vehicle_type)
+            db.session.add(new_entry)
+            db.session.commit()
+            flash('Registration successful!', 'success')
+            return redirect(url_for('index'))
     
-    return redirect(url_for(register))
-
-@app.route('/detect', methods=['POST'])
-def detect():
-    if request.method == "POST":
-        plate = request.form.get("plate")
-        parking_record = Parking.query.filter_by(plate=plate).first()
-        if parking_record:
-            session["plate"] = parking_record.plate
-            return render_template("found.html", record=parking_record)
-        else:
-            return render_template("not_found.html")
+    return render_template("register.html")
 
 if __name__ == "__main__":
     with app.app_context():
-        db.create_all()
+        db.create_all
     app.run(debug=True)
