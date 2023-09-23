@@ -5,6 +5,7 @@ app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///parking.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.secret_key = 'secretkey'
+app.config['SESSION_PERMANENT'] = True
 
 db = SQLAlchemy(app)
 
@@ -21,20 +22,28 @@ with app.app_context():
 
 @app.route('/', methods=["GET", "POST"])
 def index():
+    num = None  # Initialize num to None
+ 
     if request.method == "POST":
-        number = request.form["vno_entry"]
-        
-        number_found = db.session.query(Parking.query.filter_by(plate=number).exists()).scalar()
+        num = request.form["vno_entry"]
+     
+    number_found = db.session.query(Parking.query.filter_by(plate=num).exists()).scalar()
+    print(f"num: {num}, number_found: {number_found}")  # Add this line for debugging
 
-        if number_found:
-            flash("Print")
-            return render_template('index.html')
-        else:
-            flash("User not found")
-            return render_template('index.html')
-    else:    
-        return render_template('index.html')
+    if number_found:
+        flash("Plate number exists in the database.")
+    else:
+        flash("Plate number does not exist in the database.")
+ 
+    return render_template('index.html', number_found=number_found)
 
+@app.route('/delete_entry', methods = ["GET","POST"])
+def delete_db():
+    to_del = request.form["vno_exit"]
+    parking_record = Parking.query.filter_by(plate=to_del).first()
+    db.session.delete(parking_record)
+    db.session.commit()
+    return redirect(url_for('index'))
 @app.route("/register", methods=["GET", "POST"])
 def register():
     
