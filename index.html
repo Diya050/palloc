@@ -17,14 +17,6 @@
             width: 90%;
             ;
         }
-        .entering-column {
-            max-width: 400px;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: #fff;
-            border-radius: 5px;
-            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
-        }
 
         .plate-number {
             font-size: 24px;
@@ -69,31 +61,8 @@
                             <input type="number_plate" class="form-control" id="number_plate" placeholder="Enter number">
                         </div>
                         </form>
-                        <button type="submit" class="btn btn-secondary btn-login btn-block">Check</button>
   </div>
-
-<<<<<<< HEAD
-    <!-- Page Content -->
-    <div class="container mt-4">
-        <div class="row">
-            <!-- Entering Column -->
-            <div class="col-md-6">
-                <div class="camera-box">
-                    <h2>Entering</h2>
-                    <form action="#" method ="POST">
-                        <input type="text" name = "vno_entry" id = 'vno_entry' placeholder="Enter Vehicle Number">
-                        <input type="submit">
-                    </form>
-
-                    {%  if number_found %}
-                    <div class="plate-number" id="entering-plate-number">
-                        Num Plate exists
-                        
-                    </div>
-                    {% endif %}
-                </div>
-            </div>
-=======
+        <div class="plate-number" id="entering-plate-number">License Plate: No data</div>
       </div>
 
       <!-- Add space between the columns -->
@@ -109,21 +78,14 @@
                             <input type="number_plate" class="form-control" id="number_plate" placeholder="Enter number">
                         </div>
                         </form>
-                        <button type="submit" class="btn btn-secondary btn-login btn-block">Check</button>
   </div>
->>>>>>> 00d2a4ec8aedf503e71290259820207f249b4d51
-
+<br>
+        <div class="plate-number" id="exiting-plate-number">License Plate: No data</div>
+      </div>
     </div>
   </div>
 </div>
 
-<<<<<<< HEAD
-    <!-- Bootstrap and JavaScript dependencies (jQuery and Popper.js) -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    
-  
-=======
 
 
     <!-- Add Bootstrap JavaScript and jQuery -->
@@ -131,9 +93,39 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <!-- Your custom JavaScript for camera integration and ML goes here -->
-    
+    <script>
+        // You will need to add JavaScript code for camera access and ML integration here
+        // This code is a placeholder and won't actually capture camera feed or license plates
+        // It's just to demonstrate the layout.
+        
+        // Example camera integration (you will need to replace this with actual camera integration code)
+        function startCamera() {
+            const cameraView = document.getElementById('camera-view');
+            navigator.mediaDevices
+                .getUserMedia({ video: { facingMode: "user" }, audio: false })
+                .then(function(stream) {
+                    cameraView.srcObject = stream;
+                })
+                .catch(function(error) {
+                    console.error("Oops. Something is broken.", error);
+                });
+        }
+        startCamera('entering-camera');
+        startCamera('exiting-camera');
+        
+        // Example license plate number (you will need to replace this with actual ML code)
+        function captureLicensePlate(elementId) {
+            const plateElement = document.getElementById(elementId);
+            // Simulating ML processing
+            setTimeout(() => {
+                plateElement.textContent = 'License Plate: ABC123';
+            }, 2000);
+        }
+        captureLicensePlate('entering-plate-number');
+        captureLicensePlate('exiting-plate-number');
+        // Call the cameraStart function to initialize the camera viewer
+        startCamera();
     </script>
->>>>>>> 00d2a4ec8aedf503e71290259820207f249b4d51
     </script>
 </body>
 </html>
