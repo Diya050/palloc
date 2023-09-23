@@ -21,7 +21,19 @@ with app.app_context():
 
 @app.route('/', methods=["GET", "POST"])
 def index():
-    return render_template('index.html')
+    if request.method == "POST":
+        number = request.form["vno_entry"]
+        
+        number_found = db.session.query(Parking.query.filter_by(plate=number).exists()).scalar()
+
+        if number_found:
+            flash("Print")
+            return render_template('index.html')
+        else:
+            flash("User not found")
+            return render_template('index.html')
+    else:    
+        return render_template('index.html')
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
