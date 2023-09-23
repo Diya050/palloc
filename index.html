@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Palloc Page</title>
+    <!-- Add Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    
+    <style>
+        /* Custom CSS styles can be added here */
+        html, body {
+            margin: 10;
+            padding: 20;
+            height: 100%;
+            width: 100%;
+        }
+        .camera-box {
+            border: 1px solid #ccc;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        #camera-view {
+            height: 80%;
+            width: 60%;
+            ;
+        }
+
+        .plate-number {
+            font-size: 24px;
+            margin-top: 10px;
+        }
+        
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="px-5">
+        <a class="navbar-brand" href="#">PALLOC</a>
+    </div>
+    <div class="flex-grow-1 d-flex justify-content-end with-margin">
+    <div class="px-3">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" href="#">Capture</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Dashboard</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/register.html">Register</a>
+            </li>
+        </ul>
+    </div>
+    </div>
+</nav>
+
+    <!-- Page Content -->
+    <div class="container mt-4">
+        <div class="row">
+            <!-- Entering Column -->
+            <div class="col-md-6">
+                <div class="camera-box">
+                    <h2>Entering</h2>
+                    <div id="entering-camera"><video id="camera-view" autoplay playsinline></video></div>
+                    <div class="plate-number" id="entering-plate-number">License Plate: No data</div>
+                </div>
+            </div>
+
+            <!-- Exiting Column -->
+            <div class="col-md-6">
+                <div class="camera-box">
+                    <h2>Exiting</h2>
+                    <div id="exiting-camera"><video id="camera-view" autoplay playsinline></video></div>
+                    <div class="plate-number" id="exiting-plate-number">License Plate: No data</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap and JavaScript dependencies (jQuery and Popper.js) -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Your custom JavaScript for camera integration and ML goes here -->
+    <script>
+        // You will need to add JavaScript code for camera access and ML integration here
+        // This code is a placeholder and won't actually capture camera feed or license plates
+        // It's just to demonstrate the layout.
+        
+        // Example camera integration (you will need to replace this with actual camera integration code)
+        function startCamera() {
+            const cameraView = document.getElementById('camera-view');
+            navigator.mediaDevices
+                .getUserMedia({ video: { facingMode: "user" }, audio: false })
+                .then(function(stream) {
+                    cameraView.srcObject = stream;
+                })
+                .catch(function(error) {
+                    console.error("Oops. Something is broken.", error);
+                });
+        }
+        startCamera('entering-camera');
+        startCamera('exiting-camera');
+        
+        // Example license plate number (you will need to replace this with actual ML code)
+        function captureLicensePlate(elementId) {
+            const plateElement = document.getElementById(elementId);
+            // Simulating ML processing
+            setTimeout(() => {
+                plateElement.textContent = 'License Plate: ABC123';
+            }, 2000);
+        }
+        captureLicensePlate('entering-plate-number');
+        captureLicensePlate('exiting-plate-number');
+        // Call the cameraStart function to initialize the camera viewer
+        startCamera();
+    </script>
+    </script>
+</body>
+</html>
+
