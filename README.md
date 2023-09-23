@@ -1,2 +1,2 @@
 # Palloc
-A automated AI powered smart parking system
+An automated AI powered smart parking system.
