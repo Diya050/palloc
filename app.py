@@ -14,10 +14,10 @@ class Parking(db.Model):
     gender = db.Column(db.String(2), nullable=False)
     vehicle_type = db.Column(db.String(50), nullable=False)
 
-# Drop and recreate the table to include the 'name' column
-#with app.app_context():
- #   db.drop_all()
- #   db.create_all()
+#Drop and recreate the table to include the 'name' column
+with app.app_context():
+    db.drop_all()
+    db.create_all()
 
 @app.route('/', methods=["GET", "POST"])
 def index():
@@ -25,18 +25,19 @@ def index():
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
+    
     if request.method == "POST":
-        name = request.form.get("name")
-        plate = request.form.get("plate")
-        gender = request.form.get("gender")
-        vehicle_type = request.form.get("vehicle_type")
+        name = request.form["name"]
+        plate = request.form["plate"]
+        gender = request.form['gender']
+        vehicle_type = request.form['vehicle_type']
        
         plate_exists = db.session.query(Parking.query.filter_by(plate=plate).exists()).scalar()
 
         if plate_exists:
             flash('Plate number already exists!', 'danger')
         else:
-            new_entry = Parking(name=name, gender=gender, vehicle_type=vehicle_type)
+            new_entry = Parking(plate = plate, name=name, gender=gender, vehicle_type=vehicle_type)
             db.session.add(new_entry)
             db.session.commit()
             flash('Registration successful!', 'success')
