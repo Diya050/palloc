@@ -61,8 +61,9 @@
                             <input type="number_plate" class="form-control" id="number_plate" placeholder="Enter number">
                         </div>
                         </form>
+                        <button type="submit" class="btn btn-secondary btn-login btn-block">Check</button>
   </div>
-        <div class="plate-number" id="entering-plate-number">License Plate: No data</div>
+
       </div>
 
       <!-- Add space between the columns -->
@@ -78,10 +79,10 @@
                             <input type="number_plate" class="form-control" id="number_plate" placeholder="Enter number">
                         </div>
                         </form>
+                        <button type="submit" class="btn btn-secondary btn-login btn-block">Check</button>
   </div>
-<br>
-        <div class="plate-number" id="exiting-plate-number">License Plate: No data</div>
-      </div>
+
+
     </div>
   </div>
 </div>
@@ -93,38 +94,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <!-- Your custom JavaScript for camera integration and ML goes here -->
-    <script>
-        // You will need to add JavaScript code for camera access and ML integration here
-        // This code is a placeholder and won't actually capture camera feed or license plates
-        // It's just to demonstrate the layout.
-        
-        // Example camera integration (you will need to replace this with actual camera integration code)
-        function startCamera() {
-            const cameraView = document.getElementById('camera-view');
-            navigator.mediaDevices
-                .getUserMedia({ video: { facingMode: "user" }, audio: false })
-                .then(function(stream) {
-                    cameraView.srcObject = stream;
-                })
-                .catch(function(error) {
-                    console.error("Oops. Something is broken.", error);
-                });
-        }
-        startCamera('entering-camera');
-        startCamera('exiting-camera');
-        
-        // Example license plate number (you will need to replace this with actual ML code)
-        function captureLicensePlate(elementId) {
-            const plateElement = document.getElementById(elementId);
-            // Simulating ML processing
-            setTimeout(() => {
-                plateElement.textContent = 'License Plate: ABC123';
-            }, 2000);
-        }
-        captureLicensePlate('entering-plate-number');
-        captureLicensePlate('exiting-plate-number');
-        // Call the cameraStart function to initialize the camera viewer
-        startCamera();
+    
     </script>
     </script>
 </body>
