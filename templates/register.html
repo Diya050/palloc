@@ -68,6 +68,14 @@
                         <button type="submit" class="btn btn-primary btn-login btn-block" >Register</button>
                     </form>
   </div>
+    {% if get_flashed_messages() %}
+            <header>
+                <div class="alert alert-primary mb-0 text-center" role="alert" id="div_flash">
+                    {{ get_flashed_messages() | join(" ") }}
+                <button type=”button” class="btn" onclick="removeFlash()" style="float:right;font-weight:bold;padding-bottom:10px;"">X</button>
+                </div>
+            </header>
+    {% endif %}
 
 </div>
 </div>
@@ -78,4 +86,3 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
-
