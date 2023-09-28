@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Data Display</title>
+</head>
+<body>
+    <h1>Data from SQLAlchemy Table</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Slot Number</th>
+                <th>Vehicle type</th>
+                <th>Number Plate</th>
+                <!-- Add more table headers for your columns -->
+            </tr>
+        </thead>
+        <tbody>
+            {% for record in data %}
+                <tr>
+                    <td>{{ record.id }}</td>
+                    <td>{{ record.vehicle_type }}</td>
+                    <td>{{ record.plate }}</td>
+                    <!-- Add more table cells for your columns -->
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

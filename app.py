@@ -49,7 +49,7 @@ def index():
             slot_number.plate = car.plate
             db.session.commit()
             allocated_slot_id = slot_number.id
-            flash(f"Access Granted , slot : { slot_number.id }" if allocated_slot_id else "No vacant slots available")
+            flash(f"Access Granted , Go to slot : { slot_number.id }" if allocated_slot_id else "No vacant slots available")
         else:
             flash("Number not registered")
         
@@ -57,11 +57,16 @@ def index():
     else:    
         return render_template('index.html')
 
+@app.route("/display" , methods=["GET" , "POST"])
+def display():
+    data = db.session.query(Slot).all()
+    return render_template("Dashboard.html" , data=data)
+
 @app.route("/exit", methods=["GET", "POST"])
 def exit():
     if request.method == "POST":
         plate = request.form["number_plate"]
-        number_found = db.session.query(Parking.query.filter_by(plate=plate).exists()).scalar()
+        number_found = db.session.query(Slot.query.filter_by(plate=plate).exists()).scalar()
         if number_found:
             flash("Exit")
             car = db.session.query(Slot).filter_by(plate=plate).first()
@@ -69,6 +74,8 @@ def exit():
             car.vehicle_type = None 
             car.plate = None
             db.session.commit()
+        else:
+            flash("Car was not registered during entry")
         return redirect(url_for('index'))    
     
     return redirect(url_for('index')) 
