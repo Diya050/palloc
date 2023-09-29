@@ -23,12 +23,24 @@
             margin-top: 10px;
             align: centre;
         }
+        .entering-column {
+            max-width: 600px;
+            height: 340px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+        }
+        .navbar h2,li {
+            margin-top: 5px; 
+        }
     </style>
 </head>
 <body>
 <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-dark">
-    <div class="px-5">
+    <nav class="navbar navbar-expand-lg navbar-light bg-dark" style="max-height: 56px;">
+    <div class="px-4">
         <h2 class="text-white h2">PALLOC</h2>
     </div>
     <div class="flex-grow-1 d-flex justify-content-end with-margin">
@@ -83,9 +95,9 @@
                         </div>
                         </form>
   </div>
-<br>
+
         <div class="plate-number" id="exiting-plate-number">License Plate: No data</div>
-      </div>
+      </div><br>
         {% if get_flashed_messages() %}
             <header>
                 <div class="alert alert-primary mb-0 text-center" role="alert" id="div_flash">
