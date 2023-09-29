@@ -17,16 +17,18 @@ db = SQLAlchemy(app)
 class Parking(db.Model):
     plate = db.Column(db.String(20), unique=True, nullable=False, primary_key=True)
     name = db.Column(db.String(100), nullable=False)
-    gender = db.Column(db.String(2), nullable=False)
+    priority = db.Column(db.String(20), nullable=False)
     vehicle_type = db.Column(db.String(50), nullable=False)
 
 class Slot(db.Model):
     id = db.Column(db.Integer, unique=True, nullable=False, primary_key=True)
     status = db.Column(db.Boolean)
+    priority = db.Column(db.String(20))
     vehicle_type = db.Column(db.String(50))
     plate = db.Column(db.String(50))
 
-#Drop and recreate the table to include the 'name' column
+
+#Drop and recreate the table when needed
 #with app.app_context():
     #db.drop_all()
     #db.create_all()
@@ -35,26 +37,55 @@ class Slot(db.Model):
 @app.route('/', methods=["GET", "POST"])
 def index():
 
+    #for id in range(1, 100):
+        #priority = "Staff"
+        #status = False
+        #entry_1 = Slot(id=id,status=status,priority=priority,vehicle_type=None,plate=None)
+        #db.session.add(entry_1)
+        #db.session.commit()
+
+    #for id in range(101, 200):
+        #priority = "Female"
+        #status = False
+        #entry_2 = Slot(id=id,status=status,priority=priority,vehicle_type=None,plate=None)
+        #db.session.add(entry_2)
+        #db.session.commit()
+
+    #for id in range(201, 300):
+        #priority = "Male"
+        #status = False
+        #entry_3 = Slot(id=id,status=status,priority=priority,vehicle_type=None,plate=None)
+        #db.session.add(entry_3)
+        #db.session.commit()
+
     num = None
     if request.method == "POST":
         number = request.form["number_plate"] #vno_entry
-        
+        Staff = "Staff"
+        Male = "Male"
+        Female = "Female"
         number_found = db.session.query(Parking.query.filter_by(plate=number).exists()).scalar()
+        
+
+        Entry = db.session.query(Parking).filter_by(plate=number).first()
+        priority_val = Entry.priority
+        
         
         if number_found:
             car = db.session.query(Parking).filter_by(plate=number).first()
-            slot_number = db.session.query(Slot).filter_by(status=False).first()
+            slot_number = db.session.query(Slot).filter_by(status=False).filter_by(priority=priority_val).first()
             slot_number.status = True
             slot_number.vehicle_type = car.vehicle_type
             slot_number.plate = car.plate
             db.session.commit()
             allocated_slot_id = slot_number.id
-            flash(f"Access Granted , Go to slot : { slot_number.id }" if allocated_slot_id else "No vacant slots available")
+            flash(f"Access Granted , Go to { slot_number.priority } Parking slot : { slot_number.id }" if allocated_slot_id else "No vacant slots available")
         else:
             flash("Number not registered")
         
         return render_template('index.html')
-    else:    
+    else:   
+    
         return render_template('index.html')
 
 @app.route("/display" , methods=["GET" , "POST"])
@@ -87,7 +118,7 @@ def register():
     if request.method == "POST":
         name = request.form["name"]
         plate = request.form["plate"]
-        gender = request.form['gender']
+        priority = request.form["priority"]
         vehicle_type = request.form['vehicle_type']
        
         plate_exists = db.session.query(Parking.query.filter_by(plate=plate).exists()).scalar()
@@ -95,7 +126,7 @@ def register():
         if plate_exists:
             flash("Plate number already exists!")
         else:
-            new_entry = Parking(plate = plate, name=name, gender=gender, vehicle_type=vehicle_type)
+            new_entry = Parking(plate = plate, name=name, priority=priority, vehicle_type=vehicle_type)
             db.session.add(new_entry)
             db.session.commit()
             flash("Registration successful!")

@@ -11,6 +11,7 @@
                 <th>Slot Number</th>
                 <th>Vehicle type</th>
                 <th>Number Plate</th>
+                <th>Parking Section</th>
                 <!-- Add more table headers for your columns -->
             </tr>
         </thead>
@@ -20,6 +21,7 @@
                     <td>{{ record.id }}</td>
                     <td>{{ record.vehicle_type }}</td>
                     <td>{{ record.plate }}</td>
+                    <td>{{ record.priority }} </td>
                     <!-- Add more table cells for your columns -->
                 </tr>
             {% endfor %}
