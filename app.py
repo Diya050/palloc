@@ -40,7 +40,7 @@ def index():
         number = request.form["number_plate"] #vno_entry
         
         number_found = db.session.query(Parking.query.filter_by(plate=number).exists()).scalar()
-
+        
         if number_found:
             car = db.session.query(Parking).filter_by(plate=number).first()
             slot_number = db.session.query(Slot).filter_by(status=False).first()
