@@ -38,13 +38,23 @@
         .navbar h2,li {
             margin-top: 5px; 
         }
+        .navbar {
+            background-image: linear-gradient(270deg,#20c997, #81D0AE, white);
+        }
+        .btn-login {
+            background-image: linear-gradient(90deg, #20c997, #C8E6C9, #C8E6C9, #20c997);
+        }
+        .alert {
+            background-image: linear-gradient(270deg, #C8E6C9, #C8E6C9, #C8E6C9);
+            height: 60px;
+        }
     </style>
 </head>
 <body>
 <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-light bg-dark" style="max-height: 53px;">
     <div class="px-4">
-        <h2 class="text-white h2">PALLOC</h2>
+        <h2 class="text-black h2">PALLOC</h2>
     </div>
     <div class="flex-grow-1 d-flex justify-content-end with-margin">
     <div class="px-3">
@@ -90,13 +100,13 @@
                             <label for="number_plate">Number Plate:</label>
                             <input type="plate" class="form-control" name = 'plate' id="plate" placeholder="Enter number">
                         </div>
-                        <button type="submit" class="btn btn-primary btn-login btn-block" >Register</button>
+                        <button type="submit" class="btn btn-login btn-block text-black" >Register</button>
                     </form>
   </div>
     
 {% if get_flashed_messages() %}
             <header>
-                <div class="alert alert-primary mb-0 text-center" role="alert" id="div_flash">
+                <div class="alert mb-0 text-center" role="alert" id="div_flash">
                     {{ get_flashed_messages() | join(" ") }}
                 <button type=”button” class="btn" onclick="removeFlash()" style="float:right;font-weight:bold;padding-bottom:10px;"">X</button>
                 </div>
