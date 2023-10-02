@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Capture and Check</title>
+</head>
+<body>
+    <h1>Capture and Check Number Plate</h1>
+    <form method="POST">
+        <button type="submit" href="/check">Capture and Check</button>
+    </form>
+    <h1>{{ result }}</h1>
+
+    {% if get_flashed_messages() %}
+        <header>
+            <div class="alert mb-0 text-center" role="alert" id="div_flash">
+                {{ get_flashed_messages() | join(" ") }}
+            <button type="button" class="btn" onclick="removeFlash()" style="float:right;font-weight:bold;padding-bottom:10px;">X</button>
+            </div>
+        </header>
+    {% endif %}
+</body>
+</html>
