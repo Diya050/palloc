@@ -79,6 +79,7 @@
                             <label for="number_plate">Number Plate:</label>
                            <!--<input type="number_plate" class="form-control" name="number_plate"id="number_plate" placeholder="Enter number">{{ result }}-->
                             <button type="submit" class="form-control" name="check" id="check" >Capture</button>
+                            {{ text }}
                         </div>
                         </form>
   </div>
@@ -119,6 +120,78 @@
     </div>
   </div>
 </div>
+<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Camera Feed</title>
+    <style>
+        *{
+            border: 0;
+            padding: 0;
+            outline: none;
+            border: none;
+        }
+        #video-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        video {
+            width: 100%;
+            max-width: 640px;
+            height: auto;
+            border: 1px solid #b67575;
+            border-radius: 25px;
+            filter: drop-shadow(2px 2px 5px  black);
+        }
+        
+        .buttons{
+            display: flex;
+            gap: 2em;
+            margin-top: 3em ;
+        }
+        button{
+            height: 4em;
+            width: 20em;
+            border: 1px solid #b67575;
+            background-color: transparent;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+    <!--<form action = "/" method = "POST">
+    <div id="video-container">
+        <video id="camera-feed" autoplay></video>
+        <div class="buttons">
+            <button onclick="captureImage()">Capture</button>
+            <input type="file" accept="image/*" id="file-input" name="file-input">
+
+        <button type = "submit">Submit</button>
+        
+        
+
+     
+        <button onclick="downloadFile()">Download Selected File</button>
+    </div>
+    </div>
+    </form>-->
+    <form action="/" method="POST" id="triangle">
+        <input type="text" value="test" name="test" readonly>
+        <div id="video-container">
+            <video id="camera-feed" autoplay></video>
+            <div class="buttons">
+                <button onclick="captureImage()" >Capture</button><!-- File input and Capture button -->
+                    <input type="file" accept="image/*" id="file-input" name="file-input">
+                    
+                <!--<button type="submit">Submit</button>-->
+                <!-- Download button -->
+                <button onclick="downloadFile()">Download Selected File</button>
+            </div>
+        </div>
+    </form>
 
 
 
@@ -133,6 +206,7 @@
         // It's just to demonstrate the layout.
         
         // Example camera integration (you will need to replace this with actual camera integration code)
+        /*
         function startCamera() {
             const cameraView = document.getElementById('camera-view');
             navigator.mediaDevices
@@ -158,8 +232,98 @@
         captureLicensePlate('entering-plate-number');
         captureLicensePlate('exiting-plate-number');
         // Call the cameraStart function to initialize the camera viewer
-        startCamera();
+        startCamera();*/
     </script>
+
+    </script>
+    <script>
+        const form = document.getElementById("triangle");
+        form.addEventListener('submit', e => {
+            e.preventDefault()
+        })
+        function captureImage() {
+            const video = document.getElementById("camera-feed");
+            const canvas = document.createElement("canvas");
+            const context = canvas.getContext("2d");
+
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+
+            context.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+            // Convert the canvas content to a Blob
+            canvas.toBlob(function (blob) {
+                // Create a File object from the Blob
+                const file = new File([blob], "captured_image.png", { type: "image/png" });
+
+                // Set up a data transfer object
+                const dataTransfer = new DataTransfer();
+                dataTransfer.items.add(file);
+
+                // Set the files property of the file input by simulating a drop event
+                const fileInput = document.getElementById("file-input");
+                fileInput.files = dataTransfer.files;
+
+                const fileElement = document.getElementById("file-input")
+                const data_form = new FormData(document.getElementById('triangle'))
+                data_form.append("file",fileElement.files[0])
+                
+                console.log(fileElement.files[0])
+                console.log(data_form)
+                fetch('/upload', {
+                    method: 'POST', 
+                    body: fileElement.files[0],
+                }).then(res => {
+                    if(res.status == 200) {
+                        return res.text()
+                    } else {
+                        console.log("Error submitting image: " + res.body.json)
+                    }
+                }).then(text => {
+                    alert(text)
+                }).catch(err => {
+                    console.log(`Error: ${err}`)
+                })
+
+                // this file input now Technically stores the file 
+            }, "image/png");
+            
+        }
+
+        function downloadFile() {
+            const fileInput = document.getElementById("file-input");
+
+            if (fileInput.files.length > 0) {
+                const selectedFile = fileInput.files[0];
+                const downloadLink = document.createElement("a");
+                const url = URL.createObjectURL(selectedFile);
+
+                downloadLink.href = url;
+                downloadLink.download = selectedFile.name;
+
+                document.body.appendChild(downloadLink);
+                downloadLink.click();
+
+                document.body.removeChild(downloadLink);
+                URL.revokeObjectURL(url);
+            } else {
+                alert("Please select a file first.");
+            }
+        }
+
+        const video = document.getElementById("camera-feed");
+
+        if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+            navigator.mediaDevices.getUserMedia({ video: true })
+                .then(function (stream) {
+                    video.srcObject = stream;
+                })
+                .catch(function (error) {
+                    console.error("Error accessing the camera:", error);
+                });
+        } else {
+            console.error("getUserMedia is not supported in this browser.");
+        }
     </script>
 </body>
 </html>
