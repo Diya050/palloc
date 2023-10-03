@@ -70,14 +70,14 @@
 <div class="py-5">
   <div class="container">
     <div class="row no-gutters justify-content-center">
-      <!-- Entering Column -->
+      <!-- 
       <div class="col-md-5 bg-white p-5 entering-column text-center">
         <h1 class="pb-3">ENTERING</h1><hr>
 <div class="form-style">
                     <form action = "/" method = "POST">
         <div class="form-group">
                             <label for="number_plate">Number Plate:</label>
-                           <!--<input type="number_plate" class="form-control" name="number_plate"id="number_plate" placeholder="Enter number">{{ result }}-->
+                            <input type="number_plate" class="form-control" name="number_plate"id="number_plate" placeholder="Enter number">{{ result }}
                             <button type="submit" class="form-control" name="check" id="check" >Capture</button>
                             {{ text }}
                         </div>
@@ -90,17 +90,17 @@
         </div>
       </div>
 
-      <!-- Add space between the columns -->
+       Add space between the columns 
       <div class="col-md-1"></div>
 
-      <!-- Exiting Column -->
+     
       <div class="col-md-5 bg-white p-5 entering-column text-center">
         <h1 class="pb-3">EXITING</h1><hr>
         <div class="form-style">
                     <form action = "/exit" method = "POST">
         <div class="form-group">
                             <label for="number_plate">Number Plate:</label>
-                            <!--<input type="number_plate" class="form-control" name="number_plate" id="number_plate" placeholder="Enter number">-->
+                            <input type="number_plate" class="form-control" name="number_plate" id="number_plate" placeholder="Enter number">
                             <button type="submit" class="form-control" name="check" id="check" >Capture for exit</button>
                         </div>
                         </form>
@@ -116,7 +116,7 @@
                 </div>
             </header>
         {% endif %}
-
+        -->
     </div>
   </div>
 </div>
@@ -179,7 +179,7 @@
     </div>
     </form>-->
     <form action="/" method="POST" id="triangle">
-        <input type="text" value="test" name="test" readonly>
+        <input type="text"  name="test" readonly>
         <div id="video-container">
             <video id="camera-feed" autoplay></video>
             <div class="buttons">
@@ -188,7 +188,7 @@
                     
                 <!--<button type="submit">Submit</button>-->
                 <!-- Download button -->
-                <button onclick="downloadFile()">Download Selected File</button>
+                <!--<button onclick="downloadFile()">Download Selected File</button>-->
             </div>
         </div>
     </form>

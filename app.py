@@ -179,16 +179,25 @@ def process_image():
 
     number_found = db.session.query(Parking.query.filter_by(plate=number).exists()).scalar()     
     if number_found:
-        Entry = db.session.query(Parking).filter_by(plate=number).first()
-        priority_val = Entry.priority
-        car = db.session.query(Parking).filter_by(plate=number).first()
-        slot_number = db.session.query(Slot).filter_by(status=False).filter_by(priority=priority_val).first()
-        slot_number.status = True
-        slot_number.vehicle_type = car.vehicle_type
-        slot_number.plate = car.plate
-        db.session.commit()
-        allocated_slot_id = slot_number.id
-        return f"Access Granted , Go to { slot_number.priority } Parking slot : { slot_number.id }" if allocated_slot_id else "No vacant slots available"
+        num_slot = db.session.query(Slot.query.filter_by(plate=number).exists()).scalar()
+        if num_slot:
+            car = db.session.query(Slot).filter_by(plate=number).first()
+            car.status = False
+            car.vehicle_type = None 
+            car.plate = None
+            db.session.commit()
+            return "EXIT"
+        else:
+            Entry = db.session.query(Parking).filter_by(plate=number).first()
+            priority_val = Entry.priority
+            car = db.session.query(Parking).filter_by(plate=number).first()
+            slot_number = db.session.query(Slot).filter_by(status=False).filter_by(priority=priority_val).first()
+            slot_number.status = True
+            slot_number.vehicle_type = car.vehicle_type
+            slot_number.plate = car.plate
+            db.session.commit()
+            allocated_slot_id = slot_number.id
+            return f"Access Granted , Go to { slot_number.priority } Parking slot : { slot_number.id }" if allocated_slot_id else "No vacant slots available"
     else:
         
         return text
@@ -228,7 +237,7 @@ def exit():
     if request.method == "POST":
         #plate = request.form["number_plate"]
 
-        img = cv2.imread('image5.jpg')
+        img = cv2.imread('uploaded_image.png')
         gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
         bfilter = cv2.bilateralFilter(gray, 11, 17, 17)
         edged = cv2.Canny(bfilter, 30, 200)
