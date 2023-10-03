@@ -175,7 +175,7 @@ def process_image():
     number = text
     
     #Check what value a particular registeration in giving
-    return render_template("index.html", text=text)
+    #return render_template("index.html", text=text)
 
     number_found = db.session.query(Parking.query.filter_by(plate=number).exists()).scalar()     
     if number_found:
@@ -191,7 +191,7 @@ def process_image():
         return f"Access Granted , Go to { slot_number.priority } Parking slot : { slot_number.id }" if allocated_slot_id else "No vacant slots available"
     else:
         
-        return "Number not registered"
+        return text
 
 
 @app.route("/display" , methods=["GET" , "POST"])
