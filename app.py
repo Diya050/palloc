@@ -44,92 +44,11 @@ class Slot(db.Model):
 #with app.app_context():
     #db.drop_all()
     #db.create_all()
-'''
-@app.route("/check", methods=["GET" , "POST"])
-def check():
-    if request.method == "POST":
-    
-    # Read the uploaded image
-        #uploaded_file = request.files['file']
-        #if uploaded_file.filename != '':
-           # image_path = secure_filename(uploaded_file.filename)
-           # uploaded_file.save(image_path)
-        #else:
-            #flash('No file uploaded')
-            #return redirect(request.url)
-    
-
-        # Image processing
-        
-            return render_template("index.html", result=text)
-        else:
-            flash("Number plate not detected")
-            return redirect(request.url)
-    else:
-        flash("WORKING")
-        return render_template("check.html")
-'''
-
 
 @app.route('/', methods=["GET", "POST"])
 def index():
     return render_template('index.html')
-
-    #for id in range(1, 100):
-        #priority = "Staff"
-        #status = False
-        #entry_1 = Slot(id=id,status=status,priority=priority,vehicle_type=None,plate=None)
-        #db.session.add(entry_1)
-        #db.session.commit()
-
-    #for id in range(101, 200):
-        #priority = "Female"
-        #status = False
-        #entry_2 = Slot(id=id,status=status,priority=priority,vehicle_type=None,plate=None)
-        #db.session.add(entry_2)
-        #db.session.commit()
-
-    #for id in range(201, 300):
-        #priority = "Male"
-        #status = False
-        #entry_3 = Slot(id=id,status=status,priority=priority,vehicle_type=None,plate=None)
-        #db.session.add(entry_3)
-        #db.session.commit()
-
-    # num = None
-    # if request.method == "POST":
-    #     if 'file-input' not in request.files:
-    #         flash("NO FILE UPLOADED")
-    #     uploaded_file = request.files.get("file-input")
-    #     print(uploaded_file.filename)
-    #     uploaded_file.save('img.png')
-    #     filename = secure_filename(uploaded_file.filename)
-    #     print(app.config['UPLOAD_FOLDER'] + filename)
-    #     uploaded_file.save(app.config['UPLOAD_FOLDER'] + filename)
-    #     '''if not os.path.exists(app.config['UPLOAD_FOLDER']):
-    #         os.makedirs(app.config['UPLOAD_FOLDER'])
-
-    #     # Generate a unique filename using uuid
-    #     unique_filename = str(uuid.uuid4()) + '.jpg'
-
-    #     # Save the uploaded image with the unique filename
-    #     uploaded_file.save(os.path.join(app.config['UPLOAD_FOLDER'], unique_filename))'''
-        
-        
-    #     image_path = None
-    #     #if uploaded_file.filename != '':
-        #image_path = secure_filename(uploaded_file.filename)
-        #uploaded_file.save(image_path)
-        
-
-
-        #if image_path is None:
-            #flash("image path none")
-            #return render_template("index.html")
-
-        
-        
-        
+     
         
 def process_image():
     img = cv2.imread("uploads/uploaded_image.png")
