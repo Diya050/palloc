@@ -1,7 +1,5 @@
 from flask import Flask, render_template, request, flash, session, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
-from flask_session import Session
-from werkzeug.utils import secure_filename
 
 #TEMP
 import io
@@ -10,8 +8,7 @@ from matplotlib import pyplot as plt
 import numpy as np
 import imutils
 import easyocr
-import os
-import uuid
+
 
 
 

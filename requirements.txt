@@ -1,0 +1,8 @@
+python==3.11
+flask==2.3
+flask_sqlalchemy
+opencv-python
+matplotlib
+numpy
+imutils
+easyocr
