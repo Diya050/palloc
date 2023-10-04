@@ -15,11 +15,15 @@ User-friendly and efficient, it's the future of stress-free parking.
 - **User-Friendly Interface:** Intuitive interface ensuring a hassle-free experience.
 ----
 ## Demo
+
  ###Registration Page 
  ![image1](palloc1.jpg)
+ 
  ###Image Detection
  ![image2](palloc2.jpg)
  
+ ### Dashboard View
+ ![image3](palloc3.jpg)
 ## Getting Started
 
 ### Installation
