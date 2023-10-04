@@ -14,6 +14,7 @@ import os
 import uuid
 
 
+
 app = Flask(__name__)
 #app.secret_key = '#123%123'
 app.config['SECRET_KEY'] = 'anystringthatyoulike'
@@ -173,6 +174,8 @@ def process_image():
 
     #number = request.form["number_plate"] #vno_entry
     number = text
+    text = text.upper()
+    text = text.replace(" ", "")
     
     #Check what value a particular registeration in giving
     #return render_template("index.html", text=text)
@@ -199,7 +202,6 @@ def process_image():
             allocated_slot_id = slot_number.id
             return f"Access Granted , Go to { slot_number.priority } Parking slot : { slot_number.id }" if allocated_slot_id else "No vacant slots available"
     else:
-        
         return text
 
 
@@ -239,8 +241,10 @@ def exit():
 
         img = cv2.imread('uploaded_image.png')
         gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+        plt.imshow(cv2.cvtColor(gray, cv2.COLOR_BGR2RGB))
         bfilter = cv2.bilateralFilter(gray, 11, 17, 17)
         edged = cv2.Canny(bfilter, 30, 200)
+        plt.imshow(cv2.cvtColor(edged, cv2.COLOR_BGR2RGB))
 
         keypoints = cv2.findContours(edged.copy(), cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
         contours = imutils.grab_contours(keypoints)
@@ -257,11 +261,12 @@ def exit():
             mask = np.zeros(gray.shape, np.uint8)
             new_image = cv2.drawContours(mask, [location], 0, 255, -1)
             new_image = cv2.bitwise_and(img, img, mask=mask)
-
+            plt.imshow(cv2.cvtColor(new_image, cv2.COLOR_BGR2RGB))
             (x, y) = np.where(mask == 255)
             (x1, y1) = (np.min(x), np.min(y))
             (x2, y2) = (np.max(x), np.max(y))
             cropped_number_plate = gray[x1:x2 + 1, y1:y2 + 1]
+            plt.imshow(cv2.cvtColor(cropped_number_plate, cv2.COLOR_BGR2RGB))
 
             # Perform OCR on the cropped number plate
             reader = easyocr.Reader(['en'])
@@ -269,10 +274,15 @@ def exit():
 
             if result:
                 text = result[0][-2]
+                font = cv2.FONT_HERSHEY_SIMPLEX
+                res = cv2.putText(img, text=text, org=(approx[0][0][0], approx[1][0][1]+60), fontFace=font, fontScale=1, color=(0,255,0), thickness=2, lineType=cv2.LINE_AA)
+                res = cv2.rectangle(img, tuple(approx[0][0]), tuple(approx[2][0]), (0,255,0),3)
+                plt.imshow(cv2.cvtColor(res, cv2.COLOR_BGR2RGB))
                 #flash(result)
             else:
                 text = "No text found in the cropped number plate"
         plate = text
+        
 
         number_found = db.session.query(Slot.query.filter_by(plate=plate).exists()).scalar()
         if number_found:
