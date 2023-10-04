@@ -18,6 +18,7 @@ User-friendly and efficient, it's the future of stress-free parking.
  ###Registration Page 
  ![image1](palloc1.jpg)
  ###Image Detection
+ ![image2](palloc2.jpg)
  
 ## Getting Started
 
