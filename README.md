@@ -37,4 +37,4 @@ Run python file:
 ```bash
 python app.py
 ```
-![image1]()
+![image1](palloc1.jpg)
