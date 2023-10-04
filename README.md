@@ -16,14 +16,15 @@ User-friendly and efficient, it's the future of stress-free parking.
 ----
 ## Demo
 
- ###Registration Page 
+ ### Registration Page 
  ![image1](palloc1.jpg)
  
- ###Image Detection
+ ### Image Detection
  ![image2](palloc2.jpg)
  
  ### Dashboard View
  ![image3](palloc3.jpg)
+ ----
 ## Getting Started
 
 ### Installation
