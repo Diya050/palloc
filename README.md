@@ -13,7 +13,12 @@ User-friendly and efficient, it's the future of stress-free parking.
 - **Swift Allocation:** Allocates parking spaces eliminating the need for endless circling.
 
 - **User-Friendly Interface:** Intuitive interface ensuring a hassle-free experience.
-
+----
+## Demo
+ ###Registration Page 
+ ![image1](palloc1.jpg)
+ ###Image Detection
+ 
 ## Getting Started
 
 ### Installation
@@ -37,4 +42,3 @@ Run python file:
 ```bash
 python app.py
 ```
-![image1](palloc1.jpg)
