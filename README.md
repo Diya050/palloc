@@ -25,8 +25,6 @@ User-friendly and efficient, it's the future of stress-free parking.
  ### Dashboard View
  ![image3](palloc3.jpg)
  ----
-## Getting Started
-
 ### Installation
 
 Clone the repository:
@@ -48,3 +46,9 @@ Run python file:
 ```bash
 python app.py
 ```
+
+----
+### Technologies Used
+- OpenCV
+- Easyocr
+- Flask
